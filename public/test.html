@@ -5,18 +5,42 @@
     <script src='communicate.js' ></script>
 </head>
 <body>
-    <button onclick="doTest();">doTest()</button>
-    <div id='test'>
+    <a href='http://localhost:5000/view.html'>http://localhost:5000/view.html</a>
+    <hr>
 
+    <small>Remember to include a trailing /</small><br/>
+
+    <input placeholder='/Users/mulefish/Desktop/some_repo/some_branch/src/' type='text' size='150' id='repo1' > </input>
+    <input placeholder='/Users/mulefish/Desktop/same_repo/some_OTHER_branch/src/' type='text' size='150' id='repo2' > </input>
+    <br>
+    <button onclick="doTest();">doTest()</button>
+
+    <div id='sending_url'>
+    </div>
+    <br/>    
+    <div id='test'>
     </div>
     <hr>
     <script>
     function doTest() { 
-        const url = 'http://localhost:5000/doTest'
-        sendGet(url).then(data => {
-            const now = new Date()
-            document.getElementById("test").innerHTML = data + " | " + now; 
-        }); 
+
+        const r1 = document.getElementById("repo1").value ;
+        const r2 = document.getElementById("repo2").value ;
+        const url = `http://localhost:5000/doTest?repo1=${r1}&repo2=${r2}`
+        document.getElementById("sending_url").innerHTML = "SENDING: " +url;
+        if ( r1 && r2 ) {
+            sendGet(url).then(data => {
+                let results = "";
+                for ( let k in data ) {
+                    results += k + " : " + data[k] + "<br/>"
+                }
+                const now = new Date();
+                results += now
+                document.getElementById("test").innerHTML = results;
+            }); 
+        } else {
+            alert("both input fields need paths to a repo")
+        }
     }
     </script>
     </body>

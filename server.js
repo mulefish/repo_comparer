@@ -1,14 +1,18 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const fileLogic = require('./CollectFileInformation');
-///
 const app = express();
-const path = require("path")
 const port = 5000;
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.get('/doTest', function(req, res) {
+app.get('/doTest', function(req, res, next) {
+    
     const test = {
-        msg:"This is a test.."
+        msg:"This is a test!!!query!!",
+        repo1:"repo1: " + req.query.repo1,
+        repo2:"repo2: " + req.query.repo2
     }
     res.send(JSON.stringify(test))
 })

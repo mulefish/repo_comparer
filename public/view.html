@@ -13,12 +13,55 @@
     </style>
 </head>
 <body>
-    <button onclick="getData();">getData()</button>
+    <a href='http://localhost:5000/test.html'>http://localhost:5000/test.html</a>
+    <hr>
+
+    <button onclick="getAllData();">Everything</button>
+    <button onclick="getDeltaData();">Just the delta</button>
     <div id='context'>
     </div>
     <hr>
     <script>
-    function getData() { 
+    function getDeltaData() { 
+        const url = 'http://localhost:5000/getData'
+        sendGet(url).then(data => {
+
+            console.log(data )
+
+            table = "<table border='1'>"
+            table += "<tr><th>bytes1</th><th>bytes2</th><th>name</th></tr>"
+            
+            for ( let directoryName in data ) {
+
+                let entry = `<tr><td>dir</td><td colspan='2'>${directoryName}</td></tr>`
+                let useThisEntry = false; 
+                for ( file in data[directoryName ]) {
+                    const obj = data[directoryName ][file];
+
+                    let css = "same"; 
+                    if ( obj.hex1 !== obj.hex2 ) {
+                        css = "different"
+                        let row = `<tr class='${css}'>`;
+                        row += "<td>" + obj.bytes1 + "</td>";
+                        row += "<td>" + obj.bytes2 + "</td>";
+                        row += "<td>" + obj.file + "</td>";
+                        row += "</tr>";
+                        entry += row;
+                        useThisEntry = true; 
+                    }
+                }
+                if ( useThisEntry == true ) {
+                    table += entry;
+                }
+            }
+            table += "</table>";
+            document.getElementById("context").innerHTML = table;
+        }); 
+    }
+
+
+
+    function getAllData() { 
         const url = 'http://localhost:5000/getData'
         sendGet(url).then(data => {
 
