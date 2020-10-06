@@ -16,16 +16,52 @@
     <a href='http://localhost:5000/test.html'>http://localhost:5000/test.html</a>
     <a href='https://github.com/mulefish/repo_comparer'>https://github.com/mulefish/repo_comparer</a>
     <hr>
-
+    <table>
+        <tr>
+            <td valign='top'>
     <button onclick="getData(false);">Everything</button>
     <button onclick="getData(true);">Just the delta</button>
     <div id='context'>
     </div>
+    </td>
+    <td valign='top'>
+        <div id='file_display1'></div>
+        <hr>
+        <div id='file_display2'></div>
+    </td>
+    </tr>
+    </table>
     <hr>
     <script>
+
     function getFile(path) {
-        alert(path)
+
+        const url = `http://localhost:5000/getFile?path=${path}`
+        sendGet(url).then(data => {
+            let table = "<table border='0'>"
+            data['lines1'].forEach((line,i)=>{
+                table += `<tr><td class='pad'>${i}</td><td>${line}</td></tr>`
+            })
+            table += "</table>"
+            document.getElementById("file_display1").innerHTML =  data['path1'] + "<br>" + table;
+            // --- 
+            let table2 = "<table border='0'>"
+            
+            data['lines2'].forEach((line,i)=>{
+                table2 += `<tr><td class='pad'>${i}</td><td>${line}</td></tr>`
+            })
+            table2 += "</table>"
+            document.getElementById("file_display2").innerHTML = data['path2'] + "<br>" + table2;
+
+
+
+        }); 
     }
+
+
+
+
+
     function getData(winnow=false) { 
         const url = 'http://localhost:5000/getData'
         sendGet(url).then(data => {

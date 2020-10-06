@@ -3,6 +3,11 @@
     <head>
     <link rel="icon" href="data:;base64,=">
     <script src='communicate.js' ></script>
+    <style>
+        .pad {
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <a href='http://localhost:5000/view.html'>http://localhost:5000/view.html</a>
@@ -44,12 +49,20 @@
     </table>
 
     <script>
-    function getFile(obj) {
-        alert( obj )
+    function getFile(path) {
+
+        const url = `http://localhost:5000/getFile?path=${path}`
+        sendGet(url).then(data => {
+            let table = "<table border='0'>"
+            data[0].forEach((line,i)=>{
+                table += `<tr><td class='pad'>${i}</td><td>${line}</td></tr>`
+            })
+            table += "</table>"
+            document.getElementById("file_display").innerHTML = table;
+        }); 
     }
 
     function doTest() { 
-
         const r1 = document.getElementById("repo1").value ;
         const r2 = document.getElementById("repo2").value ;
         const url = `http://localhost:5000/doTest?repo1=${r1}&repo2=${r2}`
