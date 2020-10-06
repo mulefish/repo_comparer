@@ -1,8 +1,10 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const fileLogic = require('./CollectFileInformation');
-const app = express();
+const paths = require('./paths')
+//-
 const port = 5000;
+const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,6 +24,10 @@ app.get('/getData', function(req, res) {
 
     // const newRepo = "/Users/paul.montgomery/Desktop/<REDACTED>/working/<REDACTED>-admin-client/src/"
     // const origRepo = "/Users/paul.montgomery/Desktop/<REDACTED>/<REDACTED>-admin-client/src/";
+
+    const newRepo = paths.repos.repo1;
+    const origRepo = paths.repos.repo2;
+
 
     const merged = fileLogic.getFiles(origRepo, newRepo);
 

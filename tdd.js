@@ -1,9 +1,12 @@
 const fileLogic = require('./CollectFileInformation');
-const paths = require('./paths')
+const paths = require('./paths');
 function test_recursive_file_reading() {
     // TODO: Get paths from a config or something
     // const newRepo = "/Users/paul.montgomery/Desktop/<REDACTED>/working/<REDACTED>-admin-client/src/"
     // const origRepo = "/Users/paul.montgomery/Desktop/<REDACTED>/<REDACTED>-admin-client/src/";
+
+    const newRepo = paths.repos.repo1;
+    const origRepo = paths.repos.repo2;
 
 
     const merged = fileLogic.getFiles(newRepo, origRepo);
