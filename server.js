@@ -72,5 +72,13 @@ app.get('/getData', function(req, res) {
 })
 
 
-const about = () => `localhost:${port}/test.html\nlocalhost:${port}/view.html\nlocalhost:${port}/examine.html\n`
+//const about = () => `localhost:${port}/test.html\nlocalhost:${port}/view.html\nlocalhost:${port}/examine.html\n`
+const about = () => {
+    let msg = "";
+    msg += `tdd: node tdd.js\n`;
+    msg += `test: localhost:${port}/test.html ( integration )\n`;
+    msg += `main: localhost:${port}/examine.html\n`;
+    return msg;
+}
+
 app.listen(port, () => console.log(about()));

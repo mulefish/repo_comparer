@@ -32,7 +32,6 @@ function doCompare() {
         let row = "<tr>" + num + l + "</tr>"
         l_table += row
     })
-    console.log(l_table)
     document.getElementById("leftFile").innerHTML = l_table
 
     // right side
