@@ -11,6 +11,9 @@ STEP5: Change the paths in 'paths.js' to your repos
 STEP6: node server.js    
 STEP7: localhost:5000/examine.html
 
+# Which sort of files does this work on?
+.js / .py / .java -- It has tested against a react/node project. See CollectFileInformation.js for file types.
+
 # Note:
 examine.html's 'filecompare' is, um, more 'linguisticy' than 'CS' inspired - so it is slightly diffferent that normal. It is 'better' but also 'worse'. It looks to see if a line is used anywhere in both files that are being compared, rather than for 'exact matches'. 
 

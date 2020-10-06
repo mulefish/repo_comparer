@@ -22,7 +22,7 @@ const getFiles = (newRepo, origRepo) => {
             if (fs.statSync(dirPath + "/" + file).isDirectory()) {
                 arrayOfFiles = getAllFiles(dirPath + "/" + file, origPath, arrayOfFiles)
             } else {
-                if (file.includes(".js")) {
+                if (file.includes(".js") || file.includes(".py") || file.includes(".java")) {
                     let p = dirPath.replace(origPath, "");
                     let fullpath = path.join(dirPath, "/", file);
                     const stats = fs.statSync(fullpath)
