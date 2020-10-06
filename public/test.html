@@ -8,6 +8,12 @@
     <a href='http://localhost:5000/view.html'>http://localhost:5000/view.html</a>
     <a href='https://github.com/mulefish/repo_comparer'>https://github.com/mulefish/repo_comparer</a>
     <hr>
+
+    <table border='1'>
+        <tr><th>param test + express health check </th></tr>
+        <tr><td>
+
+
     TODO: Add the concept of params to pass in the PATHs. 
     <br>
     <small>Remember to include a trailing /</small><br/>
@@ -22,8 +28,26 @@
     <br/>    
     <div id='test'>
     </div>  
-    <hr>
+    </td></tr>
+    <tr><th>Test link to read a file from the backend </th></tr>
+    <tr><td>
+
+            <!-- <a href='/config/api/dealer/index.js' onClick='readThis(this);'> fetch this file: /config/api/dealer/index.js</a> -->
+            <a href='#' onClick="getFile('/views/CallCenterView/Dealer/DealerList/Filters/Filters.jsx')">/views/CallCenterView/Dealer/DealerList/Filters/Filters.jsx</a>
+            <div id='file_display'>
+
+            </div>
+
+        </td></tr>
+
+
+    </table>
+
     <script>
+    function getFile(obj) {
+        alert( obj )
+    }
+
     function doTest() { 
 
         const r1 = document.getElementById("repo1").value ;
