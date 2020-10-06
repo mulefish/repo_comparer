@@ -9,6 +9,8 @@ STEP4: git checkout some branch of the repo
 Now you have the repo on disk in 2 places, with different branches  
 STEP5: Change the paths in 'paths.js' to your repos    
 STEP6: node server.js    
-STEP7: localhost:5000/view.html  
+STEP7: localhost:5000/examine.html
 
+# Note:
+examine.html's 'filecompare' is, um, more 'linguisticy' than 'CS' inspired - so it is slightly diffferent that normal. It is 'better' but also 'worse'. It looks to see if a line is used anywhere in both files that are being compared, rather than for 'exact matches'. 
 

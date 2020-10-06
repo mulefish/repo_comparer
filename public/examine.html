@@ -1,0 +1,175 @@
+    <html>
+    <head>
+    <link rel="icon" href="data:;base64,=">
+    <script src='communicate.js' ></script>
+    <script src='compare.js' ></script>
+    <style>
+        .matched {
+            background-color: #00ffff;
+        }
+        .different {
+            background-color: #ff6633;;
+        }
+
+
+    /* #nudge {
+        margin-left: 20px;
+        margin-top: 20px;
+    } */
+
+    /* .content {
+        width: 100%;
+    } */
+
+    /* .pane {
+        width: 700px;
+        height: 100%;
+        background-color: white;
+        overflow: scroll;
+    } */
+
+
+    .num {
+        /* Make the numbers column's text be unselectable */ 
+        -webkit-touch-callout: none; /* iOS */ 
+        -webkit-user-select: none; /* safari */ 
+        -khtml-user-select: none; /* konqueror */
+        -moz-user-select: none; /* firefox */
+        -ms-user-select: none; /* ms edge */
+        user-select: none; /* chrome and opera */ 
+    }
+
+    .same {
+        background-color: #e0e0e0;
+        width: 100%;
+    }
+
+    .onlyLeft {
+        background-color: #ff6633;
+        width: 100%;
+    }
+
+    .onlyRight {
+
+        background-color: #ff6633;
+        width: 100%;
+
+
+    }
+
+    </style>
+</head>
+<body>
+    <a href='http://localhost:5000/test.html'>http://localhost:5000/test.html</a>
+    <a href='https://github.com/mulefish/repo_comparer'>https://github.com/mulefish/repo_comparer</a>
+    <hr>
+    <table>
+        <tr>
+            <td valign='top'>
+    <button onclick="getData(false);">Everything</button>
+    <button onclick="getData(true);">Just the delta</button>
+    <div id='context'>
+    </div>
+    </td>
+    <td valign='top'>
+
+        <table border='1'>
+            <tr>
+                <td valign='top'>
+                    <div id='leftFile'></div>
+                </td>
+                <td valign='top'>
+                    <div id='rightFile'></div>
+                </td>
+            </tr>
+        </table>
+
+
+    </td>
+    </tr>
+    </table>
+    <hr>
+    <script>
+
+    function getFile(path) {
+
+        const url = `http://localhost:5000/getFile?path=${path}`
+        sendGet(url).then(data => {
+            // let table = "<table border='0'>"
+            // data['lines1'].forEach((line,i)=>{
+            //     table += `<tr><td class='pad'>${i}</td><td>${line}</td></tr>`
+            // })
+            // table += "</table>"
+            // document.getElementById("file_display1").innerHTML =  data['path1'] + "<br>" + table;
+            // // --- 
+            // let table2 = "<table border='0'>"
+            
+            // data['lines2'].forEach((line,i)=>{
+            //     table2 += `<tr><td class='pad'>${i}</td><td>${line}</td></tr>`
+            // })
+            // table2 += "</table>"
+            // document.getElementById("file_display2").innerHTML = data['path2'] + "<br>" + table2;
+
+                // leftFile
+            left_seen = {}
+            left_ary = []
+            doFileCompare(data['lines1'], "leftFile", left_seen, left_ary)
+
+            right_seen = {}
+            right_ary = []
+            doFileCompare(data['lines2'], "rightFile", right_seen,right_ary)
+
+
+            doCompare()
+
+        }); 
+    }
+
+
+
+
+
+    function getData(winnow=false) { 
+        const url = 'http://localhost:5000/getData'
+        sendGet(url).then(data => {
+            table = "<table border='1'>"
+            table += "<tr><th>bytes1</th><th>bytes2</th><th>name</th></tr>"
+            
+            for ( let directoryName in data ) {
+
+                let entry = `<tr><td>dir</td><td colspan='2'>${directoryName}</td></tr>`
+                let useThisEntry = false; 
+                for ( file in data[directoryName ]) {
+                    const obj = data[directoryName ][file];
+
+                    let css = "matched"; 
+                    if ( obj.hex1 !== obj.hex2 ){
+                        css = "different"
+                    }
+
+                    if ( obj.hex1 !== obj.hex2 || winnow == false ) {
+                        let row = `<tr class='${css}'>`;
+                        row += "<td>" + obj.bytes1 + "</td>";
+                        row += "<td>" + obj.bytes2 + "</td>";
+                        row += `<td><a href='#' onClick=getFile('${directoryName}/${obj.file}')>${obj.file}</a></td>`;
+                        row += "</tr>";
+                        entry += row;
+                        useThisEntry = true; 
+                    }
+                }
+                if ( winnow == true) {
+                    if ( useThisEntry == true ) {
+                        table += entry;
+                    }
+                } else {
+                    table += entry;
+                }
+            }
+            table += "</table>";
+            document.getElementById("context").innerHTML = table;
+        }); 
+    }
+
+    </script>
+    </body>
+</html> 

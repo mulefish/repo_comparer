@@ -72,5 +72,5 @@ app.get('/getData', function(req, res) {
 })
 
 
-const about = () => `localhost:${port}/test.html\nlocalhost:${port}/view.html\n`
+const about = () => `localhost:${port}/test.html\nlocalhost:${port}/view.html\nlocalhost:${port}/examine.html\n`
 app.listen(port, () => console.log(about()));
