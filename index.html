@@ -1,0 +1,24 @@
+
+<html>
+    <head>
+    <link rel="icon" href="data:;base64,=">
+    <script src='communicate.js' ></script>
+</head>
+<body>
+    <index class="htmkl"></index>
+    <button onclick="doTest()();">doTest()</button>
+    <div id='test'>
+
+    </div>
+    <hr>
+    <script>
+    function doTest() { 
+        const url = 'http://localhost:4000/doTest'
+        sendGet(url).then(data => {
+            const now = new Date().getDate()
+            document.getElementById("test").innerHTML = data + " | " + now; 
+        }); 
+    }
+    </script>
+    </body>
+</html> 

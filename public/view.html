@@ -1,0 +1,54 @@
+
+<html>
+    <head>
+    <link rel="icon" href="data:;base64,=">
+    <script src='communicate.js' ></script>
+    <style>
+        .same {
+            background-color: #00ffff;
+        }
+        .different {
+            background-color: #ff6633;;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="getData();">getData()</button>
+    <div id='context'>
+    </div>
+    <hr>
+    <script>
+    function getData() { 
+        const url = 'http://localhost:5000/getData'
+        sendGet(url).then(data => {
+
+            console.log(data )
+
+            table = "<table border='1'>"
+            table += "<tr><th>bytes1</th><th>bytes2</th><th>name</th></tr>"
+            
+            for ( let directoryName in data ) {
+
+                table += `<tr><td>dir</td><td colspan='2'>${directoryName}</td></tr>`
+                for ( file in data[directoryName ]) {
+                    const obj = data[directoryName ][file];
+
+                    let css = "same"; 
+                    if ( obj.hex1 !== obj.hex2 ) {
+                        css = "different"
+                    }
+                    let row = `<tr class='${css}'>`;
+                    row += "<td>" + obj.bytes1 + "</td>";
+                    row += "<td>" + obj.bytes2 + "</td>";
+                    row += "<td>" + obj.file + "</td>";
+                    row += "</tr>";
+                    table += row;
+                }
+            }
+            table += "</table>";
+            document.getElementById("context").innerHTML = table;
+        }); 
+    }
+    </script>
+    </body>
+</html> 
